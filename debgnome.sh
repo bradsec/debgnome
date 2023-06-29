@@ -518,6 +518,7 @@ echo ${RESET}
 }
 
 main() {
+    clear
     banner
 
     # Extensions to be installed

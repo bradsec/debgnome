@@ -19,6 +19,9 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/bradsec/debgnome/main/de
 #### Option 2. Clone, modify or customise extensions and run locally. 
 (Optional) You can edit and modify script to suit using this method.
 
+Edit the `main()` function and specify the GNOME extensions you want installed.
+
+
 ```terminal
 git clone https://github.com/debgnome.git
 ```
