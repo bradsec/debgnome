@@ -94,6 +94,18 @@ print_message() {
 }
 
 
+check_gnome() {
+    if [ "$XDG_CURRENT_DESKTOP" = "GNOME" ]; then
+        print_message PASS "Running GNOME environment."
+        GNOME_SHELL_VERSION=$(gnome-shell --version | grep -oP '[0-9]+\.[0-9]+')
+        print_message INFO "GNOME desktop version: ${GNOME_SHELL_VERSION}"
+    else
+        print_message FAIL "GNOME desktop environment not detected. Exiting..."
+        exit 1
+    fi
+}
+
+
 # Function to truncate text if it exceeds the maximum length
 truncate_text() {
     local text="$1"
@@ -493,33 +505,22 @@ function install_prereqs() {
 banner() {
 echo ${GREEN}
 cat << "EOF"
-  ██████╗ ███████╗██████╗  ██████╗ ███╗   ██╗ ██████╗ ███╗   ███╗███████╗
-  ██╔══██╗██╔════╝██╔══██╗██╔════╝ ████╗  ██║██╔═══██╗████╗ ████║██╔════╝
-  ██║  ██║█████╗  ██████╔╝██║  ███╗██╔██╗ ██║██║   ██║██╔████╔██║█████╗  
-  ██║  ██║██╔══╝  ██╔══██╗██║   ██║██║╚██╗██║██║   ██║██║╚██╔╝██║██╔══╝  
-  ██████╔╝███████╗██████╔╝╚██████╔╝██║ ╚████║╚██████╔╝██║ ╚═╝ ██║███████╗
-  ╚═════╝ ╚══════╝╚═════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝
-                                                                                                                                     
-   A script for automating installation of GNOME extensions
-   and other GNOME desktop and termimal appearance customisations.
+     ____  __________  _______   ______  __  _________
+    / __ \/ ____/ __ )/ ____/ | / / __ \/  |/  / ____/
+   / / / / __/ / __  / / __/  |/ / / / / /|_/ / __/   
+  / /_/ / /___/ /_/ / /_/ / /|  / /_/ / /  / / /___   
+ /_____/_____/_____/\____/_/ |_/\____/_/  /_/_____/    
 
-   Compatible with most Debian based distros.
 EOF
-echo ${RESET}
-
-    if [ "$XDG_CURRENT_DESKTOP" = "GNOME" ]; then
-        print_message PASS "Running GNOME environment."
-        GNOME_SHELL_VERSION=$(gnome-shell --version | grep -oP '[0-9]+\.[0-9]+')
-        print_message INFO "GNOME desktop version: ${GNOME_SHELL_VERSION}"
-    else
-        print_message FAIL "GNOME desktop environment not detected. Exiting..."
-        exit 1
-    fi
+echo " ${RESET}A bash script for GNOME desktop customisation."
+echo " Compatible with most Debian based distros."
+echo
 }
 
 main() {
     clear
     banner
+    check_gnome
 
     # Extensions to be installed
     EXTENSIONS="
